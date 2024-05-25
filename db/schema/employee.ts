@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 
-const employeeTable = pgTable("employee", {
+export const employeeTable = pgTable("employee", {
   id: uuid("id")
     .primaryKey()
     .$default(() => randomUUID()),

@@ -8,6 +8,7 @@ interface IComplaint {
   relativeName: string | null;
   aadharNo: string;
   complaintType: string;
+  attachments: string[];
   policeStation: string;
   offenceTime: string;
   description: string;

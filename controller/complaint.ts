@@ -15,7 +15,9 @@ export class ComplaintController {
   async createComplaint(ctx: Context): Promise<Response> {
     try {
       const userID = ctx.get("userID") as string;
-      const input = createComplaintValidator.parse(ctx.req.json());
+      const body = await ctx.req.parseBody();
+      body.attachments = ctx.get("files");
+      const input = createComplaintValidator.parse(body);
       await complaintService.createComplaint(input, userID);
       return ctx.json(
         { message: "Complaint created successfully" },
@@ -78,7 +80,7 @@ export class ComplaintController {
 
   async createComplaintNote(ctx: Context): Promise<Response> {
     try {
-      const input = createComplaintNoteValidator.parse(ctx.req.json());
+      const input = createComplaintNoteValidator.parse(await ctx.req.json());
       await complaintService.createComplaintNote(input);
       return ctx.json(
         { message: "Note added successfully" },

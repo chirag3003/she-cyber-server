@@ -8,6 +8,7 @@ export const createComplaintValidator = z.object({
   relativeName: z.string().optional(),
   aadharNo: z.string().min(12).max(12),
   complaintType: z.string(),
+  attachments: z.array(z.string()),  
   policeStation: z.string(),
   offenceTime: z.string(),
   description: z.string(),

@@ -23,5 +23,5 @@ interface IComplaintNote {
   complaint: string;
   note: string;
   createdAt: string;
-  amdin: boolean;
+  admin: boolean;
 }

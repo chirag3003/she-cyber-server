@@ -3,7 +3,9 @@ import { pgTable, uuid, text, boolean } from "drizzle-orm/pg-core";
 import { complaintTable } from "./complaint";
 
 export const complaintNotesTable = pgTable("complaintNotes", {
-  id: uuid("id").$default(() => randomUUID()),
+  id: uuid("id")
+    .notNull()
+    .$default(() => randomUUID()),
   complaint: uuid("complaint")
     .notNull()
     .references(() => complaintTable.id),
@@ -11,7 +13,7 @@ export const complaintNotesTable = pgTable("complaintNotes", {
   createdAt: text("createdAt")
     .notNull()
     .$default(() => new Date().toISOString()),
-  admin: boolean("admin").default(false),
+  admin: boolean("admin").notNull().default(false),
 });
 
 export type InsertComplaintNotes = typeof complaintNotesTable.$inferInsert;

@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/db";
 import { complaintTable } from "../db/schema/complaint";
-import { CreateComplaintInput } from "../validators/complaint.validator";
+import { CreateComplaintInput, CreateComplaintNoteInput } from "../validators/complaint.validator";
+import { complaintNotesTable } from "../db/schema/complaintNotes";
 
 export class ComplaintService {
   async createComplaint(
@@ -20,9 +21,20 @@ export class ComplaintService {
   async getAllComplaints(): Promise<IComplaint[]> {
     return db.query.complaintTable.findMany();
   }
+
   async getComplaintByID(id: string): Promise<IComplaint | null | undefined> {
     return db.query.complaintTable.findFirst({
       where: eq(complaintTable.id, id),
+    });
+  }
+
+  async createComplaintNote(input: CreateComplaintNoteInput) {
+    await db.insert(complaintNotesTable).values(input);
+  }
+
+  async getComplaintNotes(complaintID: string): Promise<IComplaintNote[]> {
+    return db.query.complaintNotesTable.findMany({
+      where: eq(complaintNotesTable.complaint, complaintID),
     });
   }
 }

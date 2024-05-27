@@ -1,9 +1,223 @@
 {
-  "id": "fd83ffe6-3f9d-40cc-96f3-377640a7d51c",
+  "id": "b6e6b89b-9988-4a63-ae02-68ffc0054a7c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
+    "complaint": {
+      "name": "complaint",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user": {
+          "name": "user",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "phoneNo": {
+          "name": "phoneNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alternatePhoneNo": {
+          "name": "alternatePhoneNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "relativeName": {
+          "name": "relativeName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "aadharNo": {
+          "name": "aadharNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "complaintType": {
+          "name": "complaintType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "policeStation": {
+          "name": "policeStation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offenceTime": {
+          "name": "offenceTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "additionalDetails": {
+          "name": "additionalDetails",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "suspectDetails": {
+          "name": "suspectDetails",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "employee": {
+          "name": "employee",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "complaintStatus": {
+          "name": "complaintStatus",
+          "type": "statusenum",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'opened'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "complaint_user_user_id_fk": {
+          "name": "complaint_user_user_id_fk",
+          "tableFrom": "complaint",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "complaint_employee_employee_id_fk": {
+          "name": "complaint_employee_employee_id_fk",
+          "tableFrom": "complaint",
+          "tableTo": "employee",
+          "columnsFrom": [
+            "employee"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "employee": {
+      "name": "employee",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "employeeID": {
+          "name": "employeeID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phoneNo": {
+          "name": "phoneNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alternatePhoneNo": {
+          "name": "alternatePhoneNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aadharNo": {
+          "name": "aadharNo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hash": {
+          "name": "hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "salt": {
+          "name": "salt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "user": {
       "name": "user",
       "schema": "",
@@ -106,7 +320,18 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "statusenum": {
+      "name": "statusenum",
+      "values": {
+        "opened": "opened",
+        "processing": "processing",
+        "closed": "closed",
+        "unsolved": "unsolved",
+        "solved": "solved"
+      }
+    }
+  },
   "schemas": {},
   "_meta": {
     "columns": {},

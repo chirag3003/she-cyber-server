@@ -1,8 +1,6 @@
 import "dotenv/config";
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
-import { db } from "../db/db";
-import { userTable } from "../db/schema/user";
 import userRoutes from "./user";
 import { serve } from "@hono/node-server";
 import { logger } from "hono/logger";

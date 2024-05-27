@@ -13,7 +13,7 @@ interface IComplaint {
   description: string;
   additionalDetails: string | null;
   suspectDetails: string | null;
-  employee: string;
+  employee: string | null;
   complaintStatus: "opened" | "processing" | "closed" | "unsolved" | "solved";
   createdAt: string;
 }

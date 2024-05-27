@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { pgTable, uuid, text, pgEnum } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 import { employeeTable } from "./employee";
+import { sql } from "drizzle-orm";
 
 export const statusEnum = pgEnum("statusenum", [
   "opened",
@@ -25,6 +26,10 @@ export const complaintTable = pgTable("complaint", {
   relativeName: text("relativeName").default(""),
   aadharNo: text("aadharNo").notNull(),
   complaintType: text("complaintType").notNull(),
+  attachments: text("attachments")
+    .array()
+    .notNull()
+    .default(sql`'{}'::text[]`),
   policeStation: text("policeStation").notNull(),
   offenceTime: text("offenceTime").notNull(),
   description: text("description").notNull(),

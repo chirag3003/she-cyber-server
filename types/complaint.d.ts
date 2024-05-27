@@ -13,5 +13,15 @@ interface IComplaint {
   description: string;
   additionalDetails: string | null;
   suspectDetails: string | null;
+  employee: string;
+  complaintStatus: "opened" | "processing" | "closed" | "unsolved" | "solved";
   createdAt: string;
+}
+
+interface IComplaintNote {
+  id: string;
+  complaint: string;
+  note: string;
+  createdAt: string;
+  amdin: boolean;
 }

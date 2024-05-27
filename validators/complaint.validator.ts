@@ -16,3 +16,12 @@ export const createComplaintValidator = z.object({
 });
 
 export type CreateComplaintInput = z.infer<typeof createComplaintValidator>;
+
+export const createComplaintNoteValidator = z.object({
+  complaint: z.string(),
+  note: z.string(),
+});
+
+export type CreateComplaintNoteInput = z.infer<
+  typeof createComplaintNoteValidator
+>;

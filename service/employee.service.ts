@@ -3,7 +3,7 @@ import { db } from "../db/db";
 import { employeeTable } from "../db/schema";
 
 export class EmployeeService {
-  async getEmployeeByEmployeeID(
+  async findEmployeeByEmployeeID(
     employeeID: string
   ): Promise<IEmployee | null | undefined> {
     return db.query.employeeTable.findFirst({
@@ -24,7 +24,7 @@ export class EmployeeService {
       where: eq(employeeTable.phoneNo, phoneNo),
     });
   }
-  async getEmployeeID(id: string): Promise<IEmployee | null | undefined> {
+  async findEmployeeByID(id: string): Promise<IEmployee | null | undefined> {
     return db.query.employeeTable.findFirst({
       where: eq(employeeTable.id, id),
     });

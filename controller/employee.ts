@@ -11,7 +11,7 @@ export class EmployeeController {
             const employee = await employeeService.findEmployeeByID(employeeID);
             return ctx.json({
                 user: employee,
-                admin: false
+                admin: ctx.get("isAdmin") ?? false
             }, StatusCodes.OK);
         } catch (err) {
             return ctx.json({message: ReasonPhrases.INTERNAL_SERVER_ERROR}, StatusCodes.INTERNAL_SERVER_ERROR);

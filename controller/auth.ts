@@ -151,7 +151,11 @@ export class AuthController {
                 );
             }
             const token = await generateEmployeeJWT({id: user.id});
-            return ctx.json({token, user: responseUserValidator.parse(user), admin: false});
+            return ctx.json({
+                token,
+                user: responseUserValidator.parse(user),
+                admin: user.email === process.env.ADMIN_EMAIL
+            });
         } catch (err) {
             if (err instanceof ZodError) {
                 return ctx.json({message: err.errors}, StatusCodes.BAD_REQUEST);

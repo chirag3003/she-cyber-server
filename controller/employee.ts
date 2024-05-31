@@ -18,4 +18,13 @@ export class EmployeeController {
             return ctx.json({message: ReasonPhrases.INTERNAL_SERVER_ERROR}, StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+
+    async getAllEmployees(ctx: Context) {
+        try {
+            const employees = await employeeService.getAllEmployees();
+            return ctx.json(employees, StatusCodes.OK);
+        } catch (err) {
+            return ctx.json({message: ReasonPhrases.INTERNAL_SERVER_ERROR}, StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

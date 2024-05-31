@@ -106,7 +106,7 @@ export class ComplaintController {
         try {
             const complaintID = ctx.req.param("id");
             const notes = await complaintService.getComplaintNotes(complaintID);
-            return ctx.json({data: notes}, StatusCodes.OK);
+            return ctx.json(notes, StatusCodes.OK);
         } catch (e) {
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},

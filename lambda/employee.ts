@@ -1,10 +1,11 @@
 import {Hono} from "hono";
 import {EmployeeController} from "../controller/employee";
-import {authenticateEmployee} from "../middleware/auth.middleware";
+import {adminOnly, authenticateEmployee} from "../middleware/auth.middleware";
 
 const employeeRoutes = new Hono()
 const employeeController = new EmployeeController()
 
 employeeRoutes.get("/me", authenticateEmployee, employeeController.me)
+employeeRoutes.get("/", authenticateEmployee, adminOnly, employeeController.getAllEmployees)
 
 export default employeeRoutes

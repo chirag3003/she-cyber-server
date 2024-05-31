@@ -38,7 +38,7 @@ export class ComplaintController {
         try {
             const userID = ctx.get("userID") as string;
             const complaints = await complaintService.getComplaintsByUserID(userID);
-            return ctx.json({data: complaints}, StatusCodes.OK);
+            return ctx.json(complaints, StatusCodes.OK);
         } catch (e) {
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},

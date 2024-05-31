@@ -1,5 +1,6 @@
 interface IComplaint {
     id: string;
+    complaintID: string;
     user: string;
     name: string;
     email: string | null;

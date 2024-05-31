@@ -16,6 +16,7 @@ export const complaintTable = pgTable("complaint", {
     id: uuid("id")
         .primaryKey()
         .$default(() => randomUUID()),
+    complaintID: text("complaintID").notNull().$default(() => Math.floor(Math.random() * 1000000).toString()),
     user: uuid("user")
         .notNull()
         .references(() => userTable.id),

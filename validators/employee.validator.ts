@@ -6,7 +6,7 @@ export const createEmployeeValidator = z.object({
   email: z.string().email(),
   phoneNo: z.string().min(1),
   alternatePhoneNo: z.string().optional(),
-  aadharNo: z.string().min(1),
+  aadharNo: z.string().length(12),
   password: z.string().min(8).max(20),
 });
 

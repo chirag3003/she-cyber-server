@@ -43,6 +43,13 @@
       "when": 1717173256456,
       "tag": "0005_outgoing_quicksilver",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1717177139362,
+      "tag": "0006_loud_korg",
+      "breakpoints": true
     }
   ]
 }

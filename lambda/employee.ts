@@ -7,5 +7,6 @@ const employeeController = new EmployeeController()
 
 employeeRoutes.get("/me", authenticateEmployee, employeeController.me)
 employeeRoutes.get("/", authenticateEmployee, adminOnly, employeeController.getAllEmployees)
+employeeRoutes.put("/:id", authenticateEmployee, adminOnly, employeeController.updateEmployee)
 
 export default employeeRoutes

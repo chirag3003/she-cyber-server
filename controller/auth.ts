@@ -109,7 +109,7 @@ export class AuthController {
         try {
             const body = createEmployeeValidator.parse(await ctx.req.parseBody());
             const {hash, salt} = getPasswordKeys(body.password);
-            await authService.createEmployee(body, hash, salt);
+            await authService.createEmployee(body, ctx.get("files")[0] ?? null, hash, salt);
             const user = await employeeService.getEmployeeByPhone(body.phoneNo);
             return ctx.json(
                 {

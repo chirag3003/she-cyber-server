@@ -1,7 +1,7 @@
 import {Context} from "hono";
 import {ReasonPhrases, StatusCodes} from "http-status-codes";
 import {EmployeeService} from "../service/employee.service";
-import {responseEmployeeValidator} from "../validators/employee.validator";
+import {responseEmployeeValidator, updateEmployeeValidator} from "../validators/employee.validator";
 
 const employeeService = new EmployeeService();
 
@@ -24,6 +24,18 @@ export class EmployeeController {
             const employees = await employeeService.getAllEmployees();
             return ctx.json(employees, StatusCodes.OK);
         } catch (err) {
+            return ctx.json({message: ReasonPhrases.INTERNAL_SERVER_ERROR}, StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async updateEmployee(ctx: Context) {
+        try {
+            const employeeID = ctx.req.param("id") as string;
+            const body = updateEmployeeValidator.parse(await ctx.req.json());
+            await employeeService.updateEmployee(employeeID, body);
+            return ctx.json({message: "Employee updated successfully"}, StatusCodes.OK);
+        } catch (err) {
+            console.error(err);
             return ctx.json({message: ReasonPhrases.INTERNAL_SERVER_ERROR}, StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }

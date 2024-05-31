@@ -6,6 +6,7 @@ interface IEmployee {
     alternatePhoneNo: string;
     aadharNo: string;
     employeeID: string;
+    profileImage?: string | null
     createdAt: string;
     hash: string;
     salt: string;

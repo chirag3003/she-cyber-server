@@ -27,3 +27,14 @@ export const responseEmployeeValidator = z.object({
     employeeID: z.string().min(1),
     createdAt: z.string(),
 })
+
+export const updateEmployeeValidator = z.object({
+    name: z.string().min(1),
+    email: z.string().email(),
+    phoneNo: z.string().length(10),
+    alternatePhoneNo: z.string().default(""),
+    aadharNo: z.string().length(12),
+    employeeID: z.string().min(1),
+})
+
+export type UpdateEmployeeInput = z.infer<typeof updateEmployeeValidator>;

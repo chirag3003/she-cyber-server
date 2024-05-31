@@ -47,6 +47,27 @@ export class ComplaintController {
         }
     }
 
+    async getComplaintsByEmployeeID(ctx: Context): Promise<Response> {
+        try {
+            const isAdmin = ctx.get("isAdmin") as boolean;
+            const userID = ctx.get("userID") as string;
+            if (!isAdmin && ctx.req.param("id") !== userID) {
+                return ctx.json(
+                    {message: "You are not authorized to view this data"},
+                    StatusCodes.UNAUTHORIZED
+                );
+            }
+            const employeeID = ctx.req.param("id");
+            const complaints = await complaintService.getComplaintsByEmployeeID(employeeID);
+            return ctx.json(complaints, StatusCodes.OK);
+        } catch (e) {
+            return ctx.json(
+                {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
     async getAllComplaints(ctx: Context): Promise<Response> {
         try {
             const isAdmin = ctx.get("isAdmin") as boolean;

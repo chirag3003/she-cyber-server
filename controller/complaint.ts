@@ -82,6 +82,13 @@ export class ComplaintController {
     async createComplaintNote(ctx: Context): Promise<Response> {
         try {
             const input = createComplaintNoteValidator.parse(await ctx.req.json());
+            const complaint = await complaintService.getComplaintByID(input.complaint);
+            if (!complaint) {
+                return ctx.json(
+                    {message: "Complaint not found"},
+                    StatusCodes.NOT_FOUND
+                );
+            }
             await complaintService.createComplaintNote(input, ctx.get("isAdmin"));
             return ctx.json(
                 {message: "Note added successfully"},

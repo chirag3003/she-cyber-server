@@ -3,7 +3,7 @@ interface IEmployee {
   name: string;
   email: string;
   phoneNo: string;
-  alternatePhoneNo?: string | null;
+  alternatePhoneNo: string;
   aadharNo: string;
   createdAt: string;
   hash: string;

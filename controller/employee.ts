@@ -1,6 +1,7 @@
 import {Context} from "hono";
 import {ReasonPhrases, StatusCodes} from "http-status-codes";
 import {EmployeeService} from "../service/employee.service";
+import {responseEmployeeValidator} from "../validators/employee.validator";
 
 const employeeService = new EmployeeService();
 
@@ -10,7 +11,7 @@ export class EmployeeController {
             const employeeID = ctx.get("userID") as string;
             const employee = await employeeService.findEmployeeByID(employeeID);
             return ctx.json({
-                user: employee,
+                user: responseEmployeeValidator.parse(employee),
                 admin: ctx.get("isAdmin") ?? false
             }, StatusCodes.OK);
         } catch (err) {

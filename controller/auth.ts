@@ -16,7 +16,7 @@ import {
 import {UserService} from "../service/user.service";
 import {
     createEmployeeValidator,
-    loginEmployeeValidator,
+    loginEmployeeValidator, responseEmployeeValidator,
 } from "../validators/employee.validator";
 import {EmployeeService} from "../service/employee.service";
 
@@ -111,10 +111,8 @@ export class AuthController {
             const {hash, salt} = getPasswordKeys(body.password);
             await authService.createEmployee(body, hash, salt);
             const user = await employeeService.getEmployeeByPhone(body.phoneNo);
-            const token = await generateEmployeeJWT({id: user!.id});
             return ctx.json(
                 {
-                    token,
                     user: responseUserValidator.parse(user),
                     admin: false
                 },
@@ -153,7 +151,7 @@ export class AuthController {
             const token = await generateEmployeeJWT({id: user.id});
             return ctx.json({
                 token,
-                user: responseUserValidator.parse(user),
+                user: responseEmployeeValidator.parse(user),
                 admin: user.email === process.env.ADMIN_EMAIL
             });
         } catch (err) {

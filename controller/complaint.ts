@@ -82,7 +82,7 @@ export class ComplaintController {
     async createComplaintNote(ctx: Context): Promise<Response> {
         try {
             const input = createComplaintNoteValidator.parse(await ctx.req.json());
-            await complaintService.createComplaintNote(input);
+            await complaintService.createComplaintNote(input, ctx.get("isAdmin"));
             return ctx.json(
                 {message: "Note added successfully"},
                 StatusCodes.CREATED

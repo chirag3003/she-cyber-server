@@ -32,7 +32,7 @@ complaintRoutes.post(
   complaintController.createComplaintNote
 );
 complaintRoutes.get(
-  "/note/:complaintID",
+  "/note/:id",
   authenticateEmployee,
   complaintController.getComplaintNotes
 );

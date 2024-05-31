@@ -34,8 +34,8 @@ export class ComplaintService {
         });
     }
 
-    async createComplaintNote(input: CreateComplaintNoteInput) {
-        await db.insert(complaintNotesTable).values(input);
+    async createComplaintNote(input: CreateComplaintNoteInput, admin: boolean) {
+        await db.insert(complaintNotesTable).values({...input, admin});
     }
 
     async getComplaintNotes(complaintID: string): Promise<IComplaintNote[]> {

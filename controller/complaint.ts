@@ -51,7 +51,7 @@ export class ComplaintController {
         try {
             const isAdmin = ctx.get("isAdmin") as boolean;
             const complaints = await (isAdmin ? complaintService.getAllComplaints() : complaintService.getComplaintsByEmployeeID(ctx.get("userID")));
-            return ctx.json({data: complaints}, StatusCodes.OK);
+            return ctx.json(complaints, StatusCodes.OK);
         } catch (e) {
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},

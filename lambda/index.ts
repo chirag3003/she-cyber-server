@@ -7,8 +7,10 @@ import {logger} from "hono/logger";
 import authRoutes from "./auth";
 import complaintRoutes from "./complaint";
 import employeeRoutes from "./employee";
+import {cors} from "hono/cors";
 
 const app = new Hono();
+app.use(cors())
 app.use(logger());
 app.route("/user", userRoutes);
 app.route("/auth", authRoutes);

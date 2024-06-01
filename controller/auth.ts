@@ -98,6 +98,7 @@ export class AuthController {
             if (e instanceof ZodError) {
                 return ctx.json({message: e.errors}, StatusCodes.BAD_REQUEST);
             }
+            console.error(e)
             return ctx.json(
                 {message: "Internal Server Error"},
                 StatusCodes.INTERNAL_SERVER_ERROR

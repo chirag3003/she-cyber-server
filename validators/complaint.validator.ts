@@ -1,5 +1,12 @@
 import {z} from "zod";
 
+export const complaintStatusValidator = z.enum(["opened",
+    "processing",
+    "closed",
+    "unsolved",
+    "solved"
+]);
+
 export const createComplaintValidator = z.object({
     name: z.string(),
     email: z.string().email().optional(),

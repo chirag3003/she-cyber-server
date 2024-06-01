@@ -25,12 +25,12 @@ complaintRoutes.get(
     authenticateEmployee,
     complaintController.getComplaintsByEmployeeID
 );
-complaintRoutes.get("/:id", complaintController.getComplaintByID);
 complaintRoutes.get(
     "/user",
     authenticate,
     complaintController.getComplaintsByUserID
 );
+complaintRoutes.get("/:id", complaintController.getComplaintByID);
 complaintRoutes.post(
     "/note",
     authenticateEmployee,

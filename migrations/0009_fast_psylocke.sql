@@ -1,0 +1,1 @@
+ALTER TABLE "complaint" ADD CONSTRAINT "complaint_complaintID_unique" UNIQUE("complaintID");

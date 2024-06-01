@@ -17,7 +17,7 @@ export const authenticate = async (ctx: Context, next: Next) => {
         StatusCodes.UNAUTHORIZED
       );
     }
-    // authorization = authorization.split(",")[0].trim()
+    authorization = authorization.split(",")[0].trim()
     const user = await verifyJWT(authorization);
     ctx.set("userID", user.id);
     await next();
@@ -43,7 +43,7 @@ export const authenticateEmployee = async (ctx: Context, next: Next) => {
         StatusCodes.UNAUTHORIZED
       );
     }
-    // authorization = authorization.split(",")[0].trim();
+    authorization = authorization.split(",")[0].trim();
     console.log(authorization);
     const user = await verifyEmployeeJWT(authorization);
     const userData = await employeeService.findEmployeeByID(user.id);

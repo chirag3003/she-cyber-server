@@ -6,8 +6,8 @@ import {sql} from "drizzle-orm";
 
 export const statusEnum = pgEnum("statusenum", [
     "opened",
+    "assigned",
     "processing",
-    "closed",
     "unsolved",
     "solved",
 ]);

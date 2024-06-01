@@ -71,6 +71,13 @@
       "when": 1717204688540,
       "tag": "0009_fast_psylocke",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1717240624800,
+      "tag": "0010_broken_legion",
+      "breakpoints": true
     }
   ]
 }

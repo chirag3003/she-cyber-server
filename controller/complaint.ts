@@ -8,9 +8,11 @@ import {
 } from "../validators/complaint.validator";
 import {Context} from "hono";
 import {ZodError} from "zod";
+import {EmployeeService} from "../service/employee.service";
 
 const complaintService = new ComplaintService();
 const userService = new UserService();
+const employeeService = new EmployeeService()
 
 export class ComplaintController {
     async createComplaint(ctx: Context): Promise<Response> {
@@ -25,9 +27,35 @@ export class ComplaintController {
                 StatusCodes.CREATED
             );
         } catch (e) {
+            console.log(e)
             if (e instanceof ZodError) {
                 return ctx.json({message: e.errors}, StatusCodes.BAD_REQUEST);
             }
+            return ctx.json(
+                {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    async assignEmployee(ctx: Context): Promise<Response> {
+        try {
+            const complaintID = ctx.req.param("id");
+            const body = await ctx.req.json();
+            const employeeID = body.employee;
+            const employee = await employeeService.findEmployeeByID(employeeID);
+            if (!employee) {
+                return ctx.json(
+                    {message: "Employee not found"},
+                    StatusCodes.NOT_FOUND
+                );
+            }
+            await complaintService.assignEmployee(complaintID, employeeID);
+            return ctx.json(
+                {message: "Employee assigned successfully"},
+                StatusCodes.OK
+            );
+        } catch (e) {
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
                 StatusCodes.INTERNAL_SERVER_ERROR
@@ -106,7 +134,7 @@ export class ComplaintController {
         try {
             const complaintID = ctx.req.param("id");
             const body = await ctx.req.json();
-            const status = complaintStatusValidator.parse(body)
+            const status = complaintStatusValidator.parse(body.status)
             const userID = ctx.get("userID") as string;
             const isAdmin = ctx.get("isAdmin") as boolean;
             const complaint = await complaintService.getComplaintByID(complaintID);

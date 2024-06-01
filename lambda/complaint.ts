@@ -1,6 +1,7 @@
 import {Hono} from "hono";
 import {ComplaintController} from "../controller/complaint";
 import {
+    adminOnly,
     authenticate,
     authenticateEmployee,
 } from "../middleware/auth.middleware";
@@ -15,6 +16,7 @@ complaintRoutes.post(
     uploadMiddleware,
     complaintController.createComplaint
 );
+complaintRoutes.patch("/assign/:id", authenticateEmployee, adminOnly, complaintController.assignEmployee);
 complaintRoutes.get(
     "/",
     authenticateEmployee,

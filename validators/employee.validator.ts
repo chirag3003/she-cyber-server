@@ -25,6 +25,7 @@ export const responseEmployeeValidator = z.object({
     alternatePhoneNo: z.string().default(""),
     aadharNo: z.string().length(12),
     employeeID: z.string().min(1),
+    profileImage: z.string().nullable().default(""),
     createdAt: z.string(),
 })
 

@@ -1,0 +1,1 @@
+ALTER TYPE "statusenum" ADD VALUE 'assigned';

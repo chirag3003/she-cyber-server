@@ -12,6 +12,10 @@ export class ComplaintService {
         await db.insert(complaintTable).values({...input, user: userID});
     }
 
+    async assignEmployee(complaintID: string, employeeID: string) {
+        await db.update(complaintTable).set({employee: employeeID}).where(eq(complaintTable.id, complaintID));
+    }
+
     async getComplaintsByUserID(userID: string): Promise<IComplaint[]> {
         return db.query.complaintTable.findMany({
             where: eq(complaintTable.user, userID),

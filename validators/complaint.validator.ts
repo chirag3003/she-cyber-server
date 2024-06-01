@@ -7,6 +7,8 @@ export const complaintStatusValidator = z.enum(["opened",
     "solved"
 ]);
 
+export type ComplaintStatus = z.infer<typeof complaintStatusValidator>;
+
 export const createComplaintValidator = z.object({
     name: z.string(),
     email: z.string().email().optional(),

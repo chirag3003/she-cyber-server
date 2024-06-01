@@ -1,7 +1,7 @@
 import {eq} from "drizzle-orm";
 import {db} from "../db/db";
 import {complaintTable} from "../db/schema/complaint";
-import {CreateComplaintInput, CreateComplaintNoteInput} from "../validators/complaint.validator";
+import {ComplaintStatus, CreateComplaintInput, CreateComplaintNoteInput} from "../validators/complaint.validator";
 import {complaintNotesTable} from "../db/schema/complaintNotes";
 
 export class ComplaintService {
@@ -32,6 +32,10 @@ export class ComplaintService {
         return db.query.complaintTable.findFirst({
             where: eq(complaintTable.id, id),
         });
+    }
+
+    async updateComplaintStatus(id: string, status: ComplaintStatus) {
+        await db.update(complaintTable).set({complaintStatus: status}).where(eq(complaintTable.id, id))
     }
 
     async createComplaintNote(input: CreateComplaintNoteInput, admin: boolean) {

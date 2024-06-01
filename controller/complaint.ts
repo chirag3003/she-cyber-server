@@ -2,6 +2,7 @@ import {ReasonPhrases, StatusCodes} from "http-status-codes";
 import {ComplaintService} from "../service/complaint.service";
 import {UserService} from "../service/user.service";
 import {
+    complaintStatusValidator,
     createComplaintNoteValidator,
     createComplaintValidator,
 } from "../validators/complaint.validator";
@@ -93,6 +94,36 @@ export class ComplaintController {
                 );
             }
             return ctx.json({data: complaint}, StatusCodes.OK);
+        } catch (e) {
+            return ctx.json(
+                {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    async updateComplaintStatus(ctx: Context): Promise<Response> {
+        try {
+            const complaintID = ctx.req.param("id");
+            const body = await ctx.req.json();
+            const status = complaintStatusValidator.parse(body)
+            const userID = ctx.get("userID") as string;
+            const isAdmin = ctx.get("isAdmin") as boolean;
+            const complaint = await complaintService.getComplaintByID(complaintID);
+            if (!complaint) {
+                return ctx.json(
+                    {message: "Complaint not found"},
+                    StatusCodes.NOT_FOUND
+                );
+            }
+            if (!isAdmin && complaint.employee !== userID) {
+                return ctx.json({message: "You are not authorized to update this complaint"}, StatusCodes.UNAUTHORIZED)
+            }
+            await complaintService.updateComplaintStatus(complaintID, status);
+            return ctx.json(
+                {message: "Complaint status updated successfully"},
+                StatusCodes.OK
+            );
         } catch (e) {
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},

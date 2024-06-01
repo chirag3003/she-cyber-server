@@ -31,6 +31,7 @@ complaintRoutes.get(
     complaintController.getComplaintsByUserID
 );
 complaintRoutes.get("/:id", complaintController.getComplaintByID);
+complaintRoutes.patch('/status/:id', authenticateEmployee, complaintController.updateComplaintStatus)
 complaintRoutes.post(
     "/note",
     authenticateEmployee,

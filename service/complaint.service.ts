@@ -26,11 +26,12 @@ export class ComplaintService {
   async getComplaintsByUserID(userID: string): Promise<IComplaint[]> {
     return db.query.complaintTable.findMany({
       where: eq(complaintTable.user, userID),
+      orderBy: desc(complaintTable.createdAt),
     });
   }
 
   async getComplaintsByEmployeeID(employeeID: string): Promise<IComplaint[]> {
-    console.log(employeeID)
+    console.log(employeeID);
     return db.query.complaintTable.findMany({
       where: eq(complaintTable.employee, employeeID),
     });

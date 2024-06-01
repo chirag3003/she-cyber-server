@@ -4,6 +4,7 @@
   "bin": {
     "server": "bin/server.js"
   },
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

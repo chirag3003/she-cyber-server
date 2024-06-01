@@ -8,7 +8,7 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL as string;
 const employeeService = new EmployeeService()
 export const authenticate = async (ctx: Context, next: Next) => {
     try {
-        const authorization = ctx.req.header("authorization");
+        let authorization = ctx.req.header("authorization");
         if (!authorization) {
             return ctx.json(
                 {
@@ -17,11 +17,13 @@ export const authenticate = async (ctx: Context, next: Next) => {
                 StatusCodes.UNAUTHORIZED
             );
         }
+        authorization = authorization.split(",")[0].trim()
         const user = await verifyJWT(authorization);
         ctx.set("userID", user.id);
         await next();
         return;
     } catch (e) {
+        console.error(e)
         return ctx.json(
             {
                 message: "Invalid token",
@@ -32,7 +34,7 @@ export const authenticate = async (ctx: Context, next: Next) => {
 };
 export const authenticateEmployee = async (ctx: Context, next: Next) => {
     try {
-        const authorization = ctx.req.header("authorization");
+        let authorization = ctx.req.header("authorization");
         if (!authorization) {
             return ctx.json(
                 {
@@ -41,6 +43,8 @@ export const authenticateEmployee = async (ctx: Context, next: Next) => {
                 StatusCodes.UNAUTHORIZED
             );
         }
+        authorization = authorization.split(",")[0].trim();
+        console.log(authorization)
         const user = await verifyEmployeeJWT(authorization);
         const userData = await employeeService.findEmployeeByID(user.id)
         ctx.set("userID", user.id);
@@ -48,6 +52,7 @@ export const authenticateEmployee = async (ctx: Context, next: Next) => {
         await next();
         return;
     } catch (e) {
+        console.error(e)
         return ctx.json(
             {
                 message: "Invalid token",

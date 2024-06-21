@@ -78,6 +78,13 @@
       "when": 1717240624800,
       "tag": "0010_broken_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1718972604979,
+      "tag": "0011_pale_norman_osborn",
+      "breakpoints": true
     }
   ]
 }

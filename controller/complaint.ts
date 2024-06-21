@@ -50,7 +50,7 @@ export class ComplaintController {
                     StatusCodes.NOT_FOUND
                 );
             }
-            await complaintService.assignEmployee(complaintID, employeeID);
+            await Promise.all([complaintService.assignEmployee(complaintID, employeeID), complaintService.updateComplaintStatus(complaintID, "assigned")])
             return ctx.json(
                 {message: "Employee assigned successfully"},
                 StatusCodes.OK
@@ -104,6 +104,7 @@ export class ComplaintController {
             const complaints = await (isAdmin ? complaintService.getAllComplaints() : complaintService.getComplaintsByEmployeeID(ctx.get("userID")));
             return ctx.json(complaints, StatusCodes.OK);
         } catch (e) {
+            console.log(e)
             return ctx.json(
                 {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
                 StatusCodes.INTERNAL_SERVER_ERROR

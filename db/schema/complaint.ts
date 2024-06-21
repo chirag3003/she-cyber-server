@@ -38,6 +38,7 @@ export const complaintTable = pgTable("complaint", {
     additionalDetails: text("additionalDetails").notNull().default(""),
     suspectDetails: text("suspectDetails").notNull().default(""),
     employee: uuid("employee").references(() => employeeTable.id),
+    assignedOn: text("assignedOn"),
     complaintStatus: statusEnum("complaintStatus").notNull().default("opened"),
     createdAt: text("createdAt")
         .notNull()

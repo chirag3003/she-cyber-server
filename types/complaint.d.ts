@@ -17,6 +17,7 @@ interface IComplaint {
     suspectDetails: string;
     referencedBy: string;
     employee: string | null;
+    assignedOn: string | null;
     complaintStatus: "opened" | "assigned" | "processing" | "unsolved" | "solved";
     createdAt: string;
 }

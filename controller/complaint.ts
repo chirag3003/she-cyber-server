@@ -101,6 +101,7 @@ export class ComplaintController {
     async getAllComplaints(ctx: Context): Promise<Response> {
         try {
             const isAdmin = ctx.get("isAdmin") as boolean;
+            console.log(ctx.get("userID"))
             const complaints = await (isAdmin ? complaintService.getAllComplaints() : complaintService.getComplaintsByEmployeeID(ctx.get("userID")));
             return ctx.json(complaints, StatusCodes.OK);
         } catch (e) {

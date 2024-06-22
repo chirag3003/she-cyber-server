@@ -1,1 +1,0 @@
-ALTER TABLE "complaint" ADD COLUMN "assignedOn" text;

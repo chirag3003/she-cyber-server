@@ -1,5 +1,5 @@
 {
-  "id": "b6e6b89b-9988-4a63-ae02-68ffc0054a7c",
+  "id": "6c81dce2-ec25-4daa-a67a-887e78d6d789",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -12,6 +12,12 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
+          "notNull": true
+        },
+        "complaintID": {
+          "name": "complaintID",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "user": {
@@ -30,7 +36,7 @@
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "''"
         },
         "phoneNo": {
@@ -49,7 +55,7 @@
           "name": "relativeName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "''"
         },
         "aadharNo": {
@@ -63,6 +69,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "attachments": {
+          "name": "attachments",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
         },
         "policeStation": {
           "name": "policeStation",
@@ -82,18 +95,25 @@
           "primaryKey": false,
           "notNull": true
         },
+        "referencedBy": {
+          "name": "referencedBy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
         "additionalDetails": {
           "name": "additionalDetails",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "''"
         },
         "suspectDetails": {
           "name": "suspectDetails",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "''"
         },
         "employee": {
@@ -102,11 +122,17 @@
           "primaryKey": false,
           "notNull": false
         },
+        "assignedOn": {
+          "name": "assignedOn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "complaintStatus": {
           "name": "complaintStatus",
           "type": "statusenum",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "'opened'"
         },
         "createdAt": {
@@ -137,6 +163,69 @@
           "tableTo": "employee",
           "columnsFrom": [
             "employee"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "complaint_complaintID_unique": {
+          "name": "complaint_complaintID_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "complaintID"
+          ]
+        }
+      }
+    },
+    "complaintNotes": {
+      "name": "complaintNotes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "complaint": {
+          "name": "complaint",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "note": {
+          "name": "note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "complaintNotes_complaint_complaint_id_fk": {
+          "name": "complaintNotes_complaint_complaint_id_fk",
+          "tableFrom": "complaintNotes",
+          "tableTo": "complaint",
+          "columnsFrom": [
+            "complaint"
           ],
           "columnsTo": [
             "id"
@@ -186,7 +275,7 @@
           "name": "alternatePhoneNo",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "aadharNo": {
           "name": "aadharNo",
@@ -199,6 +288,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "profileImage": {
+          "name": "profileImage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "hash": {
           "name": "hash",
@@ -216,7 +311,22 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "employee_email_unique": {
+          "name": "employee_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        },
+        "employee_phoneNo_unique": {
+          "name": "employee_phoneNo_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phoneNo"
+          ]
+        }
+      }
     },
     "user": {
       "name": "user",
@@ -325,8 +435,8 @@
       "name": "statusenum",
       "values": {
         "opened": "opened",
+        "assigned": "assigned",
         "processing": "processing",
-        "closed": "closed",
         "unsolved": "unsolved",
         "solved": "solved"
       }

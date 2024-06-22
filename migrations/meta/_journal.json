@@ -5,85 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1716813162176,
-      "tag": "0000_slim_shard",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1716813676536,
-      "tag": "0001_remarkable_lilith",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1716814312204,
-      "tag": "0002_burly_tana_nile",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1716814730375,
-      "tag": "0003_eager_chronomancer",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1717172853141,
-      "tag": "0004_flippant_mister_sinister",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1717173256456,
-      "tag": "0005_outgoing_quicksilver",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1717177139362,
-      "tag": "0006_loud_korg",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1717195663410,
-      "tag": "0007_aromatic_jean_grey",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1717198844529,
-      "tag": "0008_moaning_white_queen",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "5",
-      "when": 1717204688540,
-      "tag": "0009_fast_psylocke",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "5",
-      "when": 1717240624800,
-      "tag": "0010_broken_legion",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "5",
-      "when": 1718972604979,
-      "tag": "0011_pale_norman_osborn",
+      "when": 1719060442013,
+      "tag": "0000_secret_tomas",
       "breakpoints": true
     }
   ]

@@ -8,6 +8,27 @@
       "when": 1719060442013,
       "tag": "0000_secret_tomas",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1719685894537,
+      "tag": "0001_silent_professor_monster",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1719686572825,
+      "tag": "0002_crazy_alex_wilder",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1719702335072,
+      "tag": "0003_mysterious_revanche",
+      "breakpoints": true
     }
   ]
 }

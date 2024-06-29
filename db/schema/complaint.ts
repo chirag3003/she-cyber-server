@@ -1,5 +1,5 @@
 import {randomUUID} from "crypto";
-import {pgTable, uuid, text, pgEnum} from "drizzle-orm/pg-core";
+import {pgTable, uuid, text, pgEnum, serial} from "drizzle-orm/pg-core";
 import {userTable} from "./user";
 import {employeeTable} from "./employee";
 import {sql} from "drizzle-orm";
@@ -16,7 +16,8 @@ export const complaintTable = pgTable("complaint", {
     id: uuid("id")
         .primaryKey()
         .$default(() => randomUUID()),
-    complaintID: text("complaintID").notNull().$default(() => Math.floor(Math.random() * 1000000).toString()).unique(),
+    seqnum: serial("seqnum"),
+    complaintID: text("complaintID"),
     user: uuid("user")
         .notNull()
         .references(() => userTable.id),

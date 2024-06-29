@@ -1,0 +1,1 @@
+ALTER TABLE "complaint" DROP COLUMN IF EXISTS "aknowledgementID";

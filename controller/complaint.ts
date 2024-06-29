@@ -9,6 +9,9 @@ import {
 import {Context} from "hono";
 import {ZodError} from "zod";
 import {EmployeeService} from "../service/employee.service";
+import {newComplaintMails} from "../config/mail.config";
+import complaint from "../lambda/complaint";
+import {assignComplaintMail, createComplaintMail} from "../lib/mail.lib";
 
 const complaintService = new ComplaintService();
 const userService = new UserService();
@@ -21,7 +24,10 @@ export class ComplaintController {
             const body = await ctx.req.parseBody();
             body.attachments = ctx.get("files");
             const input = createComplaintValidator.parse(body);
-            await complaintService.createComplaint(input, userID);
+            const complaint = await complaintService.createComplaint(input, userID);
+            await Promise.all(newComplaintMails.map(mail => {
+                return createComplaintMail(mail, complaint)
+            }))
             return ctx.json(
                 {message: "Complaint created successfully"},
                 StatusCodes.CREATED
@@ -50,7 +56,18 @@ export class ComplaintController {
                     StatusCodes.NOT_FOUND
                 );
             }
-            await Promise.all([complaintService.assignEmployee(complaintID, employeeID), complaintService.updateComplaintStatus(complaintID, "assigned")])
+            const complaint = await complaintService.getComplaintByID(complaintID);
+            if (!complaint) {
+                return ctx.json(
+                    {message: "Complaint not found"},
+                    StatusCodes.NOT_FOUND
+                );
+            }
+            await Promise.all([
+                complaintService.assignEmployee(complaintID, employeeID),
+                complaintService.updateComplaintStatus(complaintID, "assigned"),
+                assignComplaintMail(employee.email, complaint)
+            ])
             return ctx.json(
                 {message: "Employee assigned successfully"},
                 StatusCodes.OK

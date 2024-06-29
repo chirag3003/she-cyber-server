@@ -12,8 +12,42 @@ export class ComplaintService {
     async createComplaint(
         input: CreateComplaintInput,
         userID: string
-    ): Promise<void> {
-        await db.insert(complaintTable).values({...input, user: userID});
+    ): Promise<IComplaint> {
+        const date = new Date()
+        const year = String(date.getFullYear()).substring(2)
+        let month = String(date.getMonth() + 1)
+        if (month.length === 1) {
+            month = "0" + month
+        }
+        let caseType = ""
+        switch (input.complaintType) {
+            case "financial":
+                caseType = "FF"
+                break;
+            case "cyber":
+                caseType = "CH"
+                break;
+            default:
+                caseType = "OC"
+                break
+        }
+        let complaintCode = `OSCH${month}${year}${caseType}`
+        // const complaintCode = `O${org}${month}${year}${caseType}${Math.floor(Math.random() * 1000000).toString()}`
+        await db.insert(complaintTable).values({
+            ...input,
+            user: userID,
+            complaintID: complaintCode
+        });
+        const complaint = await db.query.complaintTable.findFirst({where: eq(complaintTable.complaintID, complaintCode)})
+        console.log(complaint!.seqnum)
+        let newComplaintCode = `${complaintCode}${complaint!.seqnum}`
+        console.log()
+        await db.update(complaintTable).set({
+            // ...complaint!,
+            complaintID: newComplaintCode
+        }).where(eq(complaintTable.id, complaint!.id))
+        complaint!.complaintID = newComplaintCode
+        return complaint!
     }
 
     async assignEmployee(complaintID: string, employeeID: string) {

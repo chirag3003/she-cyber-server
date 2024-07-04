@@ -24,4 +24,8 @@ export class AuthService {
             .insert(employeeTable)
             .values({...input, profileImage, hash, salt, createdAt: new Date().toISOString()});
     }
+
+    async changeEmployeePassword(id: string, hash: string, salt: string): Promise<void> {
+        await db.update(employeeTable).set({hash, salt}).where(eq(employeeTable.id, id));
+    }
 }

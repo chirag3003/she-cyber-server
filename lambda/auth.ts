@@ -17,5 +17,7 @@ authRoutes.post(
     uploadMiddleware,
     authController.createEmployee
 );
+authRoutes.put('/employee/:id/changePassword', authenticateEmployee, adminOnly, authController.changeEmployeePassword);
+
 
 export default authRoutes;

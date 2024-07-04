@@ -106,6 +106,19 @@ export class AuthController {
         }
     }
 
+    async changeEmployeePassword(ctx: Context): Promise<Response> {
+        try {
+            const id = ctx.req.param("id")
+            const {password} = await ctx.req.json()
+            const {hash, salt} = getPasswordKeys(password);
+            await authService.changeEmployeePassword(id, hash, salt);
+            return ctx.json("", StatusCodes.OK)
+        } catch (err) {
+            console.error(err)
+            return ctx.json({message: "Internal Server Error"}, StatusCodes.INTERNAL_SERVER_ERROR)
+        }
+    }
+
     async createEmployee(ctx: Context): Promise<Response> {
         try {
             const body = createEmployeeValidator.parse(await ctx.req.parseBody());

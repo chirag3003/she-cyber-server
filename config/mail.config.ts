@@ -16,6 +16,7 @@ export const newComplaintMails = [
     'contactgsony@gmail.com',
     'contactgnagaraju@gmail.com',
     'contactpmamatha@gmail.com',
+    'chiragbhalotia0412@gmail.com'
 ]
 
 // export const newComplaintMails = ["chiragbhalotia0412@gmail.com"]

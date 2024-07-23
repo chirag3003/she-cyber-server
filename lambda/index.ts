@@ -22,7 +22,7 @@ app.get("/", (c) => {
 
 serve({
     fetch: app.fetch,
-    port: 5000,
+    port: 5001,
 });
 
 export const handler = handle(app);

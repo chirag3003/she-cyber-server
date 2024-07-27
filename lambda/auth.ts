@@ -12,8 +12,8 @@ authRoutes.post("/signup", authController.signup);
 authRoutes.post("/employee/login", authController.employeeLogin);
 authRoutes.post(
     "/employee/create",
-    // authenticateEmployee,
-    // adminOnly,
+    authenticateEmployee,
+    adminOnly,
     uploadMiddleware,
     authController.createEmployee
 );

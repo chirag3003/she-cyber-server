@@ -10,13 +10,12 @@ export const newComplaintMails = [
     'vamshicybercrimeexpert@gmail.com',
     'contactsaisreekar@gmail.com',
     'contactgbhagya@gmail.com',
-    'contactmahesh@gmail.com',
+    'contactschmahesh@gmail.com',
     'contactssruthi@gmail.com',
     'contactbvenkatesh@gmail.com',
     'contactgsony@gmail.com',
     'contactgnagaraju@gmail.com',
     'contactpmamatha@gmail.com',
-    'chiragbhalotia0412@gmail.com'
 ]
 
 // export const newComplaintMails = ["chiragbhalotia0412@gmail.com"]

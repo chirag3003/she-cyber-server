@@ -44,5 +44,6 @@ complaintRoutes.get(
     authenticateEmployee,
     complaintController.getComplaintNotes
 );
+complaintRoutes.post("/media", authenticateEmployee, uploadMiddleware, complaintController.uploadMedia);
 
 export default complaintRoutes;

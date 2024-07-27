@@ -214,4 +214,17 @@ export class ComplaintController {
             );
         }
     }
+
+    async uploadMedia(ctx: Context) {
+        try {
+            const files = ctx.get("files");
+            return ctx.json(files, StatusCodes.OK);
+        } catch (err) {
+            console.error(err);
+            return ctx.json(
+                {message: ReasonPhrases.INTERNAL_SERVER_ERROR},
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
 }

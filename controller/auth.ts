@@ -19,6 +19,7 @@ import {
     loginEmployeeValidator, responseEmployeeValidator,
 } from "../validators/employee.validator";
 import {EmployeeService} from "../service/employee.service";
+import redisClient from "../utils/redis";
 
 const authService = new AuthService();
 const userService = new UserService();
@@ -47,6 +48,7 @@ export class AuthController {
                 );
             }
             const token = await generateJWT({id: user.id});
+            await redisClient.set(`user:${user.id}`, token)
             return ctx.json({token, user: responseUserValidator.parse(user)});
         } catch (err) {
             if (err instanceof ZodError) {
@@ -87,6 +89,7 @@ export class AuthController {
             await authService.createUser(body, hash, salt);
             const user = await userService.findUserByPhoneNo(body.phoneNo);
             const token = await generateJWT({id: user!.id});
+            await redisClient.set(`user:${user!.id}`, token);
             return ctx.json(
                 {
                     token,
@@ -112,6 +115,7 @@ export class AuthController {
             const {password} = await ctx.req.json()
             const {hash, salt} = getPasswordKeys(password);
             await authService.changeEmployeePassword(id, hash, salt);
+            await redisClient.del(`employee:${id}`);
             return ctx.json("", StatusCodes.OK)
         } catch (err) {
             console.error(err)
@@ -163,6 +167,7 @@ export class AuthController {
                 );
             }
             const token = await generateEmployeeJWT({id: user.id});
+            await redisClient.set(`employee:${user.id}`, token);
             return ctx.json({
                 token,
                 user: responseEmployeeValidator.parse(user),
@@ -177,6 +182,29 @@ export class AuthController {
                 {message: "Internal Server Error"},
                 StatusCodes.INTERNAL_SERVER_ERROR
             );
+        }
+    }
+
+    async employeeLogout(ctx: Context): Promise<Response> {
+        try {
+            const userID = ctx.get("userID") as string;
+            await redisClient.del(`employee:${userID}`)
+            return ctx.json("", StatusCodes.OK)
+        } catch (err) {
+            console.error(err)
+            return ctx.json({message: "Internal Server Error"}, StatusCodes.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+
+    async userLogout(ctx: Context): Promise<Response> {
+        try {
+            const userID = ctx.get("userID") as string;
+            await redisClient.del(`user:${userID}`)
+            return ctx.json("", StatusCodes.OK)
+        } catch (err) {
+            console.error(err)
+            return ctx.json({message: "Internal Server Error"}, StatusCodes.INTERNAL_SERVER_ERROR)
         }
     }
 }

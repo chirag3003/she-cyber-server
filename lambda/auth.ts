@@ -18,6 +18,8 @@ authRoutes.post(
     authController.createEmployee
 );
 authRoutes.put('/employee/:id/changePassword', authenticateEmployee, adminOnly, authController.changeEmployeePassword);
+authRoutes.post("/logout", authenticate, authController.userLogout);
+authRoutes.post("/employee/logout", authenticateEmployee, authController.employeeLogout);
 
 
 export default authRoutes;

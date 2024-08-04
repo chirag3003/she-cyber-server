@@ -13,7 +13,8 @@
     "deploy": "cdk deploy",
     "migration": "drizzle-kit generate:pg",
     "migrate": "node db/migrate.mjs",
-    "dev": "node --loader @esbuild-kit/esm-loader --watch lambda/index.ts"
+    "dev": "node --loader @esbuild-kit/esm-loader --watch lambda/index.ts",
+    "start": "node --loader @esbuild-kit/esm-loader lambda/index.ts"
   },
   "devDependencies": {
     "@esbuild-kit/esm-loader": "^2.6.5",
